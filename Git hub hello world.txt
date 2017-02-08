@@ -1,0 +1,11 @@
+SELECT DISTINCT A.MANDT, 
+		B.LOW AS MINVALUE,
+		B.FIELD AS FIELDNAME
+			 FROM 			AGR_USERS A
+			 INNER JOIN 	AGR_1251 B
+			 	 ON A.MANDT = B.MANDT
+			 	AND A.AGR_NAME 	= B.AGR_NAME
+			 WHERE 	A.UNAME 	= SESSION_USER
+			 	AND B.OBJECT 	= 'ZNEXTUX'		-->Authorization Object meant for 'The Next' App
+				AND	B.FIELD 	= :P_FIELD		-->Field to be fetched
+				AND B.LOW 		!= '$' || :P_FIELD;	--> To avoid parameter values, eg. $VKORG, etc.
