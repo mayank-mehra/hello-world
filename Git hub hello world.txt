@@ -1,11 +1,6 @@
-SELECT DISTINCT A.MANDT, 
-		B.LOW AS MINVALUE,
-		B.FIELD AS FIELDNAME
-			 FROM 			AGR_USERS as A
-			 INNER JOIN 	AGR_1251 as B
-			 	 ON A.MANDT = B.MANDT
-			 	AND A.AGR_NAME 	= B.AGR_NAME
-			 WHERE 	A.UNAME 	= SESSION_USER
-			 	AND B.OBJECT 	= 'ZNEXTUX'		-->Authorization Object meant for 'The Next' App
-				AND	B.FIELD 	= :P_FIELD		-->Field to be fetched
-				AND B.LOW 		!= '$' || :P_FIELD;	--> To avoid parameter values, eg. $VKORG, etc.
+SELECT PACKAGE_ID,OBJECT_NAME,CHANGE_NUMBER,
+                    OBJECT_SUFFIX as BASE_OBJECT_SUFFIX,
+                    concat(concat(PACKAGE_ID,'/'),OBJECT_NAME)  as  abs_object 
+                     FROM CHANGE_ENTRIES 
+                     WHERE PACKAGE_ID like 'sial.sapnext%' AND 
+                     CHANGE_NUMBER = :P_Changenum;
